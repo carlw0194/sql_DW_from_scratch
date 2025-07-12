@@ -43,9 +43,9 @@ BEGIN TRY
                N' WITH (FIRSTROW = 2, FORMAT = ''CSV'', FIELDTERMINATOR = '','', ROWTERMINATOR = ''0x0a'', CODEPAGE = ''65001'');';
     EXEC (@sql);
     DECLARE @rows INT = @@ROWCOUNT;
-    DECLARE @duration_secs INT = DATEDIFF(MILLISECOND, @start, SYSDATETIME());
+    DECLARE @duration_ms INT = DATEDIFF(MILLISECOND, @start, SYSDATETIME());
     SELECT TOP (10) * FROM bronze.crm_cust_info;
-    PRINT CONCAT('crm_cust_info: ', @rows, ' rows loaded in ', @duration_secs, ' ms');
+    PRINT CONCAT('crm_cust_info: ', @rows, ' rows loaded in ', @duration_ms, ' ms');
 
     PRINT 'Loading bronze.crm_prd_info …';
     DECLARE @start_prd DATETIME2 = SYSDATETIME();
@@ -54,9 +54,9 @@ BEGIN TRY
                N' WITH (FIRSTROW = 2, FORMAT = ''CSV'', FIELDTERMINATOR = '','', ROWTERMINATOR = ''0x0a'', CODEPAGE = ''65001'');';
     EXEC (@sql);
     DECLARE @rows_prd INT = @@ROWCOUNT;
-    DECLARE @duration_secs_prd INT = DATEDIFF(MILLISECOND, @start_prd, SYSDATETIME());
+    DECLARE @duration_ms_prd INT = DATEDIFF(MILLISECOND, @start_prd, SYSDATETIME());
     SELECT TOP (10) * FROM bronze.crm_prd_info;
-    PRINT CONCAT('crm_prd_info: ', @rows_prd, ' rows loaded in ', @duration_secs_prd, ' ms');
+    PRINT CONCAT('crm_prd_info: ', @rows_prd, ' rows loaded in ', @duration_ms_prd, ' ms');
 
     PRINT 'Loading bronze.crm_sales_details …';
     DECLARE @start_sales DATETIME2 = SYSDATETIME();
@@ -65,9 +65,9 @@ BEGIN TRY
                N' WITH (FIRSTROW = 2, FORMAT = ''CSV'', FIELDTERMINATOR = '','', ROWTERMINATOR = ''0x0a'', CODEPAGE = ''65001'');';
     EXEC (@sql);
     DECLARE @rows_sales INT = @@ROWCOUNT;
-    DECLARE @duration_secs_sales INT = DATEDIFF(MILLISECOND, @start_sales, SYSDATETIME());
+    DECLARE @duration_ms_sales INT = DATEDIFF(MILLISECOND, @start_sales, SYSDATETIME());
     SELECT TOP (10) * FROM bronze.crm_sales_details;
-    PRINT CONCAT('crm_sales_details: ', @rows_sales, ' rows loaded in ', @duration_secs_sales, ' ms');
+    PRINT CONCAT('crm_sales_details: ', @rows_sales, ' rows loaded in ', @duration_ms_sales, ' ms');
 
     /* ---------------- ERP ---------------- */
     PRINT 'Loading bronze.erp_cust_az12 …';
@@ -77,9 +77,9 @@ BEGIN TRY
                N' WITH (FIRSTROW = 2, FORMAT = ''CSV'', FIELDTERMINATOR = '','', ROWTERMINATOR = ''0x0a'', CODEPAGE = ''65001'');';
     EXEC (@sql);
     DECLARE @rows_az INT = @@ROWCOUNT;
-    DECLARE @duration_secs_az INT = DATEDIFF(MILLISECOND, @start_az, SYSDATETIME());
+    DECLARE @duration_ms_az INT = DATEDIFF(MILLISECOND, @start_az, SYSDATETIME());
     SELECT TOP (10) * FROM bronze.erp_cust_az12;
-    PRINT CONCAT('erp_cust_az12: ', @rows_az, ' rows loaded in ', @duration_secs_az, ' ms');
+    PRINT CONCAT('erp_cust_az12: ', @rows_az, ' rows loaded in ', @duration_ms_az, ' ms');
 
     PRINT 'Loading bronze.erp_loc_a101 …';
     DECLARE @start_loc DATETIME2 = SYSDATETIME();
@@ -88,9 +88,9 @@ BEGIN TRY
                N' WITH (FIRSTROW = 2, FORMAT = ''CSV'', FIELDTERMINATOR = '','', ROWTERMINATOR = ''0x0a'', CODEPAGE = ''65001'');';
     EXEC (@sql);
     DECLARE @rows_loc INT = @@ROWCOUNT;
-    DECLARE @duration_secs_loc INT = DATEDIFF(MILLISECOND, @start_loc, SYSDATETIME());
+    DECLARE @duration_ms_loc INT = DATEDIFF(MILLISECOND, @start_loc, SYSDATETIME());
     SELECT TOP (10) * FROM bronze.erp_loc_a101;
-    PRINT CONCAT('erp_loc_a101: ', @rows_loc, ' rows loaded in ', @duration_secs_loc, ' ms');
+    PRINT CONCAT('erp_loc_a101: ', @rows_loc, ' rows loaded in ', @duration_ms_loc, ' ms');
 
     PRINT 'Loading bronze.erp_px_cat_g1v2 …';
     DECLARE @start_px DATETIME2 = SYSDATETIME();
@@ -99,9 +99,9 @@ BEGIN TRY
                N' WITH (FIRSTROW = 2, FORMAT = ''CSV'', FIELDTERMINATOR = '','', ROWTERMINATOR = ''0x0a'', CODEPAGE = ''65001'');';
     EXEC (@sql);
     DECLARE @rows_px INT = @@ROWCOUNT;
-    DECLARE @duration_secs_px INT = DATEDIFF(MILLISECOND, @start_px, SYSDATETIME());
+    DECLARE @duration_ms_px INT = DATEDIFF(MILLISECOND, @start_px, SYSDATETIME());
     SELECT TOP (10) * FROM bronze.erp_px_cat_g1v2;
-    PRINT CONCAT('erp_px_cat_g1v2: ', @rows_px, ' rows loaded in ', @duration_secs_px, ' ms');
+    PRINT CONCAT('erp_px_cat_g1v2: ', @rows_px, ' rows loaded in ', @duration_ms_px, ' ms');
 
     DECLARE @batchMs INT = DATEDIFF(MILLISECOND, @batchStart, SYSDATETIME());
     PRINT CONCAT('Bronze layer load completed in ', @batchMs, ' ms.');
