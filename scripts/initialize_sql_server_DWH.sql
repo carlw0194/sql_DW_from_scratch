@@ -1,6 +1,6 @@
 /*********************************************************************************************************
  * Script: create_medallion_dw.sql
- * Author: <Your Name>
+ * Author: <Carlton Njong>
  * Date: 2025-07-12
  *
  * PURPOSE
