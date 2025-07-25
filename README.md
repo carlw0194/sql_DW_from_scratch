@@ -30,20 +30,16 @@ This repository contains scripts and sample data to build a simple **Medallion a
 ### Medallion Layers
 
 ```mermaid
-flowchart LR
-    A[Bronze] --> B[Silver]
-    B --> C[Gold]
-    C --> D[Analytics]
-```
-
-### ETL Process
-
-```mermaid
-flowchart LR
-    X[CRM & ERP CSVs] -->|load_bronze| B1(Bronze Tables)
-    B1 -->|load_silver| C1(Silver Tables)
-    C1 -->|load_gold| D1(Gold Tables)
-    D1 --> E1[BI / Reports]
+graph LR
+    CRM1[cust_info.csv<br>18k customers] --> Bronze
+    CRM2[prd_info.csv<br>products] --> Bronze
+    CRM3[sales_details.csv<br>60k sales] --> Bronze
+    ERP1[CUST_AZ12.csv<br>customer details] --> Bronze
+    ERP2[LOC_A101.csv<br>locations] --> Bronze
+    
+    Bronze[Bronze Layer<br>Raw Data Storage] --> Silver
+    Silver[Silver Layer<br>Clean & Transform] --> Gold
+    Gold[Gold Layer<br>Dimensional Model] --> BI[BI Reports<br>Analytics Ready]
 ```
 
 ## Data Samples
@@ -91,5 +87,4 @@ automation and quality control:
 4. **Documentation & Version Control** – Continue updating the docs directory
    and keep all SQL scripts under version control for reproducibility.
 
-Following these steps will evolve this repository into a production-ready
-Medallion data warehouse.
+
