@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Script: gold_ddl.sql
- * Author: <Your Name>
+ * Author: Carlton Njong
  * Date: 2025-07-25
  *
  * PURPOSE
