@@ -1,6 +1,6 @@
 /*********************************************************************************************************
  * Object : Stored Procedure [dbo].[load_bronze]
- * Author  : <Your Name>
+ * Author  : Carlton Njong
  * Created : 2025-07-12
  *
  * PURPOSE
