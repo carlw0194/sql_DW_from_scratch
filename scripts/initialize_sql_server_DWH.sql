@@ -32,8 +32,10 @@ DECLARE @ForceRecreate  BIT     = 0;               -- Set to 1 to drop & recreat
 IF DB_ID(@DatabaseName) IS NOT NULL AND @ForceRecreate = 1
 BEGIN
     PRINT CONCAT('Dropping existing database ', @DatabaseName, ' …');
-    ALTER DATABASE QUOTENAME(@DatabaseName) SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-    DROP DATABASE QUOTENAME(@DatabaseName);
+    DECLARE @alterSql NVARCHAR(MAX) = N'ALTER DATABASE ' + QUOTENAME(@DatabaseName) + N' SET SINGLE_USER WITH ROLLBACK IMMEDIATE;';
+    EXEC(@alterSql);
+    DECLARE @dropSql NVARCHAR(MAX) = N'DROP DATABASE ' + QUOTENAME(@DatabaseName) + N';';
+    EXEC(@dropSql);
 END;
 
 /* -----[ 2. Create database if it does not exist ]----- */
@@ -46,7 +48,8 @@ END;
 GO
 
 /* -----[ 3. Switch context to the new database ]----- */
-USE QUOTENAME(@DatabaseName);
+DECLARE @useDbSql NVARCHAR(MAX) = N'USE ' + QUOTENAME(@DatabaseName) + N';';
+EXEC(@useDbSql);
 GO
 
 /* -----[ 4. Create Medallion schemas ]----- */
