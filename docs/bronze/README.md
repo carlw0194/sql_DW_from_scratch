@@ -4,10 +4,43 @@ The Bronze layer stores raw copies of the CSV files exactly as received. It serv
 
 ```mermaid
 graph TD
-    %% CRM Source Files with Details
-    C1[cust_info.csv<br>id, key, name, status] --> P1[BULK INSERT<br>CRM Data]
-    C2[prd_info.csv<br>id, key, name, cost] --> P1
-    C3[sales_details.csv<br>order, product, customer] --> P1
+    subgraph Source[Source Files]
+        %% CRM Files
+        C1[cust_info.csv<br>id, key, name, status]
+        C2[prd_info.csv<br>id, key, name, cost]
+        C3[sales_details.csv<br>order, product, customer]
+        
+        %% ERP Files
+        E1[CUST_AZ12.csv<br>CID, BDATE, GEN]
+        E2[LOC_A101.csv<br>CID, CNTRY]
+    end
+
+    subgraph Process[ETL Process]
+        P0[load_bronze Procedure]
+        P1[BULK INSERT CRM]
+        P2[BULK INSERT ERP]
+        V[Validate Row Counts]
+    end
+
+    subgraph Target[Bronze Layer]
+        B1[bronze.crm_cust_info<br>Raw Customer Data]
+        B2[bronze.crm_prd_info<br>Raw Product Data]
+        B3[bronze.crm_sales_details<br>Raw Sales Data]
+        B4[bronze.erp_cust_az12<br>Raw ERP Customer]
+        B5[bronze.erp_loc_a101<br>Raw Location Data]
+    end
+
+    %% Source to Process
+    C1 & C2 & C3 --> P1
+    E1 & E2 --> P2
+
+    %% Process Flow
+    P0 --> P1 & P2
+    P1 & P2 --> V
+
+    %% Process to Target
+    P1 --> B1 & B2 & B3
+    P2 --> B4 & B5
     
     %% ERP Source Files with Details
     E1[CUST_AZ12.csv<br>CID, BDATE, GEN] --> P2[BULK INSERT<br>ERP Data]
